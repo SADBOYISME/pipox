@@ -3,23 +3,28 @@ name: Build and Deploy Next.js Docker to Home Server
 on:
   push:
     branches:
-      - main # หรือ branch ที่คุณต้องการ Deploy
+      - main # หรือ branch ที่คุณต้องการ Deploy (เช่น master, production)
 
 env:
   REGISTRY: ghcr.io # GitHub Container Registry
-  IMAGE_NAME: ${{ github.repository }} # ชื่อ Image จะเป็น username/repository_name
+  # ชื่อ Image จะเป็น username/repository_name โดยอัตโนมัติจาก github.repository
+  # คุณสามารถ override ได้ถ้าต้องการ เช่น IMAGE_NAME: your-custom-image-name
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-docker-image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     permissions:
-      contents: read # สิทธิ์ในการอ่าน repository (สำหรับ checkout)
-      packages: write # สิทธิ์ในการเขียนไปยัง GitHub Packages (GHCR)
+      contents: read    # สิทธิ์ในการอ่าน repository (สำหรับ checkout)
+      packages: write   # สิทธิ์ในการเขียนไปยัง GitHub Packages (GHCR)
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3 # <<< เพิ่มเข้ามาเพื่อแก้ไขปัญหา cache
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -29,27 +34,27 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }} # GITHUB_TOKEN มีสิทธิ์ push ไปยัง GHCR ใน repo เดียวกัน
 
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: meta # ตั้ง ID ให้ Step นี้เพื่ออ้างอิง outputs
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: | # สร้าง Tags สำหรับ Image
-            type=sha # Tag ด้วย commit SHA
-            type=raw,value=latest,enable={{is_default_branch}} # Tag 'latest' ถ้าเป็น default branch
+            type=sha # Tag ด้วย commit SHA แบบสั้น (เช่น sha-a1b2c3d)
+            type=raw,value=latest,enable={{is_default_branch}} # Tag 'latest' ถ้าเป็น default branch (เช่น main)
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: . # Path ไปยัง Dockerfile (Root ของ Repo)
-          push: true # Push Image ไปยัง Registry
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha # ใช้ GitHub Actions cache สำหรับ Docker layer caching
-          cache-to: type=gha,mode=max
+          context: . # Path ไปยัง Directory ที่มี Dockerfile (Root ของ Repo)
+          push: true # สั่งให้ Push Image ไปยัง Registry หลังจาก Build เสร็จ
+          tags: ${{ steps.meta.outputs.tags }} # Tags ที่ได้จาก step 'meta'
+          labels: ${{ steps.meta.outputs.labels }} # Labels ที่ได้จาก step 'meta'
+          cache-from: type=gha # ใช้ GitHub Actions cache สำหรับ Docker layer caching (ดึง cache)
+          cache-to: type=gha,mode=max # ส่งออก cache ไปยัง GitHub Actions cache (เขียน cache)
 
   deploy-to-server:
     name: Deploy Docker Container to Server
-    needs: build-and-push-docker-image # Job นี้จะรันหลังจาก build-and-push-docker-image สำเร็จ
+    needs: build-and-push-docker-image # Job นี้จะรันหลังจาก 'build-and-push-docker-image' สำเร็จ
     runs-on: ubuntu-latest
 
     steps:
@@ -59,37 +64,47 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          port: 22 # Port SSH ของ Server (default คือ 22)
           script: |
-            set -e # Exit immediately if a command exits with a non-zero status.
+            set -e # สั่งให้ Script หยุดทันทีถ้ามีคำสั่งใดๆ fail
 
-            IMAGE_TAG="sha-${GITHUB_SHA::7}" # ใช้ Commit SHA แบบสั้นเป็น Tag (หรือ 'latest')
+            # กำหนด Tag ของ Image ที่จะใช้ (แนะนำให้ใช้ Commit SHA เพื่อความแม่นยำ)
+            # GITHUB_SHA คือ Commit SHA เต็ม, ::7 คือเอา 7 ตัวแรก
+            IMAGE_TAG="sha-${GITHUB_SHA::7}"
+            # ถ้าคุณต้องการใช้ 'latest' tag เสมอ (สำหรับ default branch) ก็สามารถเปลี่ยนเป็น:
+            # IMAGE_TAG="latest"
+
             FULL_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$IMAGE_TAG"
-            # ถ้าคุณใช้ tag 'latest' ให้เปลี่ยน IMAGE_TAG เป็น "latest"
-            # FULL_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+            CONTAINER_NAME="my-nextjs-app" # <<< ตั้งชื่อ Container ของคุณบน Server ที่นี่
 
-            CONTAINER_NAME="my-nextjs-app" # ตั้งชื่อ Container ของคุณ
+            echo "INFO: Deploying image: $FULL_IMAGE_NAME"
+            echo "INFO: Target container name: $CONTAINER_NAME"
 
-            echo "🐳 Logging in to GitHub Container Registry on server..."
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+            echo "INFO: Logging in to GitHub Container Registry on server..."
+            # แนะนำให้ใช้ Personal Access Token (PAT) ที่มีสิทธิ์ read:packages สำหรับ login บน server
+            # แทนที่ YOUR_GITHUB_USERNAME_FOR_PAT ด้วย Username ของเจ้าของ PAT
+            echo "${{ secrets.GHCR_PAT }}" | docker login ${{ env.REGISTRY }} -u YOUR_GITHUB_USERNAME_FOR_PAT --password-stdin
 
-            echo "🚚 Pulling Docker image: $FULL_IMAGE_NAME"
+            echo "INFO: Pulling Docker image from $FULL_IMAGE_NAME..."
             docker pull $FULL_IMAGE_NAME
 
-            echo "🛑 Stopping and removing old container (if exists)..."
-            docker stop $CONTAINER_NAME || true # || true เพื่อไม่ให้ error ถ้า container ไม่มีอยู่
+            echo "INFO: Stopping and removing old container (if exists)..."
+            docker stop $CONTAINER_NAME || true # '|| true' เพื่อไม่ให้ script fail ถ้า container ไม่มีอยู่
             docker rm $CONTAINER_NAME || true
 
-            echo "🚀 Running new Docker container..."
+            echo "INFO: Running new Docker container..."
             docker run -d \
               -p 3000:3000 \
               --name $CONTAINER_NAME \
               --restart always \
-              # (Optional) -v /path/on/server/persistent-data:/app/data \ # Mount volume ถ้าต้องการ
-              # (Optional) -e MY_ENV_VAR="some_value" \ # ส่ง Environment Variables
+              # (Optional) เพิ่ม Environment Variables ที่จำเป็นสำหรับ App ของคุณที่นี่:
+              # -e NODE_ENV=production \
+              # -e DATABASE_URL="${{ secrets.DATABASE_URL_ON_SERVER }}" \
+              # (Optional) Mount volume ถ้า Application ของคุณต้องการเก็บข้อมูลถาวร:
+              # -v /path/on/your/server/data:/app/data \
               $FULL_IMAGE_NAME
 
-            echo "🧹 Cleaning up old images (optional)..."
-            docker image prune -f
+            echo "INFO: Cleaning up old Docker images (optional)..."
+            docker image prune -af # -a ลบ image ที่ไม่ได้ใช้ทั้งหมด (dangling และ unreferenced), -f คือ force
 
             echo "🎉 Deployment to home server completed successfully!"

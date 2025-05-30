@@ -53,54 +53,84 @@ jobs:
   deploy-to-server:
     name: Deploy Docker Container to Server (Self-hosted)
     needs: build-and-push-docker-image # รันหลังจาก Job แรกสำเร็จ
-    runs-on:
-      self-hosted # <<< แก้ไขตรงนี้! ให้รันบน Self-hosted Runner ของคุณ
-      # คุณสามารถใช้ labels ที่เฉพาะเจาะจงมากขึ้นได้ถ้าตั้งค่าไว้ เช่น [self-hosted, linux, x64]
+    runs-on: self-hosted # ให้รันบน Self-hosted Runner ของคุณ
 
     steps:
       - name: Deploy Docker Container
-        env: # กำหนด Environment variables ที่จะใช้ใน script นี้
+        env:
+          REGISTRY_ENV: ${{ env.REGISTRY }} # ส่ง env จาก workflow level เข้า step env
+          IMAGE_NAME_ENV: ${{ env.IMAGE_NAME }} # ส่ง env จาก workflow level เข้า step env
           GHCR_PAT: ${{ secrets.GHCR_PAT }} # PAT สำหรับ Login เข้า GHCR
-          # คุณจะต้องแทนที่ YOUR_GITHUB_USERNAME_FOR_PAT ด้วย Username ของเจ้าของ PAT ใน script ด้านล่าง
-          GHCR_USERNAME: YOUR_GITHUB_USERNAME_FOR_PAT # <<< แก้ไขตรงนี้เป็น GitHub Username ของเจ้าของ GHCR_PAT
+          # !!! สำคัญมาก: แก้ไข "YOUR_ACTUAL_GITHUB_USERNAME" ด้านล่างนี้ !!!
+          # ให้เป็น GitHub Username ของคุณที่เป็นเจ้าของ GHCR_PAT
+          GHCR_USERNAME: "SADBOYISME" # <<< แก้ไขตรงนี้เป็น GitHub Username จริงๆ ของคุณ
         run: |
           set -e # สั่งให้ Script หยุดทันทีถ้ามีคำสั่งใดๆ fail
 
+          # --- ส่วน Debugging (สามารถลบออกได้เมื่อทำงานปกติแล้ว) ---
+          echo "DEBUG: ---- Workflow Variables ----"
+          echo "DEBUG: REGISTRY_ENV (Workflow env.REGISTRY): '$REGISTRY_ENV'"
+          echo "DEBUG: IMAGE_NAME_ENV (Workflow env.IMAGE_NAME): '$IMAGE_NAME_ENV'"
+          echo "DEBUG: GITHUB_SHA: '${GITHUB_SHA}'"
+          echo "DEBUG: ---- Step Environment Variables ----"
+          echo "DEBUG: GHCR_USERNAME (Step env.GHCR_USERNAME): '$GHCR_USERNAME'"
+          echo "DEBUG: GHCR_PAT is set: $(if [ -n "$GHCR_PAT" ]; then echo "true"; else echo "false"; fi)" # เช็คว่า PAT มีค่าหรือไม่ (ไม่แสดงตัว PAT)
+          echo "DEBUG: ---- End Debugging Variables ----"
+
+          # --- ตรวจสอบค่าที่จำเป็นก่อนดำเนินการ ---
+          if [ -z "$GHCR_PAT" ]; then
+            echo "ERROR: GHCR_PAT is not set. Please set the GHCR_PAT secret."
+            exit 1
+          fi
+          if [ -z "$GHCR_USERNAME" ] || [ "$GHCR_USERNAME" == "YOUR_ACTUAL_GITHUB_USERNAME" ]; then
+            echo "ERROR: GHCR_USERNAME is not set correctly in the workflow. Please edit the workflow file."
+            exit 1
+          fi
+          if [ -z "$REGISTRY_ENV" ]; then
+            echo "ERROR: REGISTRY_ENV is not set."
+            exit 1
+          fi
+          if [ -z "$IMAGE_NAME_ENV" ]; then
+            echo "ERROR: IMAGE_NAME_ENV is not set."
+            exit 1
+          fi
+
           IMAGE_TAG="sha-${GITHUB_SHA::7}"
           # หรือถ้าต้องการใช้ 'latest' สำหรับ default branch:
-          # if [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" ]]; then
+          # DEFAULT_BRANCH_NAME=$(basename "${{ github.event.repository.default_branch }}") # For default branch name like 'main' or 'master'
+          # if [[ "${{ github.ref_name }}" == "$DEFAULT_BRANCH_NAME" ]]; then
           #   IMAGE_TAG="latest"
           # fi
 
-          FULL_IMAGE_NAME="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$IMAGE_TAG"
+          FULL_IMAGE_NAME="$REGISTRY_ENV/$IMAGE_NAME_ENV:$IMAGE_TAG"
           CONTAINER_NAME="my-nextjs-app" # <<< ตั้งชื่อ Container ของคุณบน Server ที่นี่
 
           echo "INFO: Deploying image: $FULL_IMAGE_NAME"
           echo "INFO: Target container name: $CONTAINER_NAME"
 
           echo "INFO: Logging in to GitHub Container Registry..."
-          echo "$GHCR_PAT" | docker login ${{ env.REGISTRY }} -u "$GHCR_USERNAME" --password-stdin
+          echo "$GHCR_PAT" | docker login "$REGISTRY_ENV" -u "$GHCR_USERNAME" --password-stdin
 
           echo "INFO: Pulling Docker image from $FULL_IMAGE_NAME..."
-          docker pull $FULL_IMAGE_NAME
+          docker pull "$FULL_IMAGE_NAME"
 
           echo "INFO: Stopping and removing old container (if exists)..."
-          docker stop $CONTAINER_NAME || true
-          docker rm $CONTAINER_NAME || true
+          docker stop "$CONTAINER_NAME" || true # '|| true' เพื่อไม่ให้ script fail ถ้า container ไม่มีอยู่
+          docker rm "$CONTAINER_NAME" || true
 
           echo "INFO: Running new Docker container..."
           docker run -d \
             -p 3000:3000 \
-            --name $CONTAINER_NAME \
+            --name "$CONTAINER_NAME" \
             --restart always \
             # (Optional) เพิ่ม Environment Variables ที่จำเป็นสำหรับ App ของคุณที่นี่:
             # -e NODE_ENV=production \
             # -e DATABASE_URL="${{ secrets.DATABASE_URL_ON_SERVER }}" \
             # (Optional) Mount volume ถ้า Application ของคุณต้องการเก็บข้อมูลถาวร:
             # -v /path/on/your/server/data:/app/data \
-            $FULL_IMAGE_NAME
+            "$FULL_IMAGE_NAME"
 
           echo "INFO: Cleaning up old Docker images (optional)..."
-          docker image prune -af
+          docker image prune -af # -a ลบ image ที่ไม่ได้ใช้ทั้งหมด (dangling และ unreferenced), -f คือ force
 
           echo "🎉 Deployment to home server completed successfully!"

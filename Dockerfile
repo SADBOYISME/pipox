@@ -3,7 +3,7 @@ FROM oven/bun:1 as base
 WORKDIR /app
 
 # Copy package.json, bun.lockb, etc.
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 # COPY tsconfig.json next-env.d.ts next.config.js postcss.config.js tailwind.config.js ./
 # Copy ไฟล์ config อื่นๆ ที่จำเป็นสำหรับการ build
 

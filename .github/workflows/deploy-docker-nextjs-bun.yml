@@ -119,15 +119,14 @@ jobs:
           docker rm "$CONTAINER_NAME" || true
 
           echo "INFO: Running new Docker container..."
+          # (Optional) เพิ่ม Environment Variables และ Volume Mount ได้ตามต้องการ:
+          # -e NODE_ENV=production \
+          # -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+          # -v /path/on/your/server/data:/app/data \
           docker run -d \
             -p 3000:3000 \
             --name "$CONTAINER_NAME" \
             --restart always \
-            # (Optional) เพิ่ม Environment Variables ที่จำเป็นสำหรับ App ของคุณที่นี่:
-            # -e NODE_ENV=production \
-            # -e DATABASE_URL="${{ secrets.DATABASE_URL_ON_SERVER }}" \
-            # (Optional) Mount volume ถ้า Application ของคุณต้องการเก็บข้อมูลถาวร:
-            # -v /path/on/your/server/data:/app/data \
             "$FULL_IMAGE_NAME"
 
           echo "INFO: Cleaning up old Docker images (optional)..."

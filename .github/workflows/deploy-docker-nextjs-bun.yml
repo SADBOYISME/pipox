@@ -96,15 +96,19 @@ jobs:
           fi
 
           IMAGE_TAG="sha-${GITHUB_SHA::7}"
+          # แปลง IMAGE_NAME_ENV เป็นตัวพิมพ์เล็ก เพื่อให้เข้ากับ Docker naming convention
+          IMAGE_NAME_LOWER=$(echo "$IMAGE_NAME_ENV" | tr '[:upper:]' '[:lower:]')
           # หรือถ้าต้องการใช้ 'latest' สำหรับ default branch:
           # DEFAULT_BRANCH_NAME=$(basename "${{ github.event.repository.default_branch }}") # For default branch name like 'main' or 'master'
           # if [[ "${{ github.ref_name }}" == "$DEFAULT_BRANCH_NAME" ]]; then
           #   IMAGE_TAG="latest"
           # fi
 
-          FULL_IMAGE_NAME="$REGISTRY_ENV/$IMAGE_NAME_ENV:$IMAGE_TAG"
+          FULL_IMAGE_NAME="$REGISTRY_ENV/$IMAGE_NAME_LOWER:$IMAGE_TAG"
           CONTAINER_NAME="my-nextjs-app" # <<< ตั้งชื่อ Container ของคุณบน Server ที่นี่
 
+          echo "INFO: Original image name: $IMAGE_NAME_ENV"
+          echo "INFO: Lowercase image name: $IMAGE_NAME_LOWER"
           echo "INFO: Deploying image: $FULL_IMAGE_NAME"
           echo "INFO: Target container name: $CONTAINER_NAME"
 

@@ -54,16 +54,16 @@ jobs:
     name: Deploy Docker Container to Server (Self-hosted)
     needs: build-and-push-docker-image # รันหลังจาก Job แรกสำเร็จ
     runs-on: self-hosted # ให้รันบน Self-hosted Runner ของคุณ
+    permissions:
+      packages: read # สิทธิ์ในการอ่าน packages จาก GHCR
 
     steps:
       - name: Deploy Docker Container
         env:
           REGISTRY_ENV: ${{ env.REGISTRY }} # ส่ง env จาก workflow level เข้า step env
           IMAGE_NAME_ENV: ${{ env.IMAGE_NAME }} # ส่ง env จาก workflow level เข้า step env
-          GHCR_PAT: ${{ secrets.GHCR_PAT }} # PAT สำหรับ Login เข้า GHCR
-          # !!! สำคัญมาก: แก้ไข "YOUR_ACTUAL_GITHUB_USERNAME" ด้านล่างนี้ !!!
-          # ให้เป็น GitHub Username ของคุณที่เป็นเจ้าของ GHCR_PAT
-          GHCR_USERNAME: "SADBOYISME" # <<< แก้ไขตรงนี้เป็น GitHub Username จริงๆ ของคุณ
+          GHCR_PAT: ${{ secrets.GITHUB_TOKEN }} # ใช้ GITHUB_TOKEN แทน GHCR_PAT
+          GHCR_USERNAME: ${{ github.actor }} # ใช้ github.actor แทนการ hardcode
         run: |
           set -e # สั่งให้ Script หยุดทันทีถ้ามีคำสั่งใดๆ fail
 
@@ -82,8 +82,8 @@ jobs:
             echo "ERROR: GHCR_PAT is not set. Please set the GHCR_PAT secret."
             exit 1
           fi
-          if [ -z "$GHCR_USERNAME" ] || [ "$GHCR_USERNAME" == "YOUR_ACTUAL_GITHUB_USERNAME" ]; then
-            echo "ERROR: GHCR_USERNAME is not set correctly in the workflow. Please edit the workflow file."
+          if [ -z "$GHCR_USERNAME" ]; then
+            echo "ERROR: GHCR_USERNAME is not set correctly in the workflow."
             exit 1
           fi
           if [ -z "$REGISTRY_ENV" ]; then

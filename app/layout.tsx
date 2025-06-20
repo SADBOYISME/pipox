@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description: "Transform your business with expert technology consulting and digital transformation solutions.",
     type: "website",
     locale: "en_US",
-    url: "https://pipox.com",
+    url: "https://pipox.chobchuen.com/",
     siteName: "PipoX Technology Consulting",
   },
   twitter: {
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     google: "hVy1MCa2pqEBxHcb-gVJizGJYan3xIs7mfmea1jwPJI",
   },
   alternates: {
-    canonical: "https://pipox.com",
+    canonical: "https://pipox.chobchuen.com",
   },
 };
 

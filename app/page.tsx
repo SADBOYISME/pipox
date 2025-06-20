@@ -3,13 +3,28 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from './components/LanguageProvider'
 import LanguageSwitcher from './components/LanguageSwitcher'
+import ProductModal from './components/ProductModal'
+import PartnersSlider from './components/PartnersSlider'
 
 export default function Home() {
   const { t } = useLanguage();
   const [showClientBg, setShowClientBg] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState('');
+
   useEffect(() => {
     setShowClientBg(true);
   }, []);
+
+  const handleProductClick = (productKey: string) => {
+    setSelectedProduct(productKey);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedProduct('');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900">
@@ -23,6 +38,7 @@ export default function Home() {
             <div className="hidden md:flex space-x-8">
               <a href="#services" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.services')}</a>
               <a href="#about" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.about')}</a>
+              <a href="#products" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.products')}</a>
               <a href="#contact" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.contact')}</a>
             </div>
             <div className="flex items-center space-x-4">
@@ -80,6 +96,163 @@ export default function Home() {
                 <span className="relative z-10">{t('hero.call')}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-10 rounded-lg blur-xl transition-opacity duration-300"></div>
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="py-16 bg-gradient-to-br from-white to-blue-50 dark:from-slate-900 dark:to-blue-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">{t('products.title')}</h2>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">{t('products.subtitle')}</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* AI Project Platform */}
+            <div
+              onClick={() => handleProductClick('ai')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleProductClick('ai');
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Learn more about AI Project Platform"
+              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
+
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300 group-hover:scale-110">
+                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {t('products.ai.title')}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.ai.desc')}</p>
+
+                {/* Click indicator */}
+                <div className="flex items-center text-sm text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="mr-2">{t('products.modal.clickToLearn')}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Cloud Infrastructure */}
+            <div
+              onClick={() => handleProductClick('cloud')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleProductClick('cloud');
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Learn more about Cloud Infrastructure"
+              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
+
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-cyan-100 dark:bg-cyan-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-cyan-500/50 transition-all duration-300 group-hover:scale-110">
+                  <svg className="w-6 h-6 text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  {t('products.cloud.title')}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.cloud.desc')}</p>
+
+                <div className="flex items-center text-sm text-cyan-600 dark:text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="mr-2">{t('products.modal.clickToLearn')}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Business Automation Suite */}
+            <div
+              onClick={() => handleProductClick('automation')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleProductClick('automation');
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Learn more about Business Automation Suite"
+              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-emerald-500/20 to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
+
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-green-500/50 transition-all duration-300 group-hover:scale-110">
+                  <svg className="w-6 h-6 text-green-600 dark:text-green-400 group-hover:text-green-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                  {t('products.automation.title')}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.automation.desc')}</p>
+
+                <div className="flex items-center text-sm text-green-600 dark:text-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="mr-2">{t('products.modal.clickToLearn')}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Data Analytics Tools */}
+            <div
+              onClick={() => handleProductClick('analytics')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleProductClick('analytics');
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Learn more about Data Analytics Tools"
+              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
+
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-purple-500/50 transition-all duration-300 group-hover:scale-110">
+                  <svg className="w-6 h-6 text-purple-600 dark:text-purple-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                  {t('products.analytics.title')}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.analytics.desc')}</p>
+
+                <div className="flex items-center text-sm text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="mr-2">{t('products.modal.clickToLearn')}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -229,30 +402,254 @@ export default function Home() {
             <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">{t('about.tech.title')}</h3>
               <div className="grid grid-cols-2 gap-4">
+                {/* Cloud Platforms */}
                 <div className="text-center">
-                  <div className="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg mb-2">
-                    <span className="text-blue-600 dark:text-blue-400 font-semibold">Cloud</span>
+                  <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg mb-3 min-h-[120px] flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center space-x-3 mb-2">
+                      {/* AWS Logo */}
+                      <div className="w-10 h-6 bg-gradient-to-r from-orange-400 to-orange-500 rounded flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">AWS</span>
+                      </div>
+                      {/* Azure Logo */}
+                      <div className="w-10 h-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">Azure</span>
+                      </div>
+                      {/* GCP Logo */}
+                      <div className="w-10 h-6 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 rounded flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">GCP</span>
+                      </div>
+                    </div>
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">Cloud Platforms</span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">AWS, Azure, GCP</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">AWS, Microsoft Azure, Google Cloud</p>
                 </div>
+
+                {/* Frontend Technologies */}
                 <div className="text-center">
-                  <div className="bg-green-100 dark:bg-green-900 p-4 rounded-lg mb-2">
-                    <span className="text-green-600 dark:text-green-400 font-semibold">Frontend</span>
+                  <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-lg mb-3 min-h-[120px] flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center space-x-3 mb-2">
+                      {/* React Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 10.11c1.03 0 1.87.84 1.87 1.89s-.84 1.89-1.87 1.89c-1.03 0-1.87-.84-1.87-1.89s.84-1.89 1.87-1.89M7.37 20c.63.38 2.01-.2 3.6-1.7-.52-.59-1.03-1.23-1.51-1.9a22.7 22.7 0 0 1-2.4-.36c-.51 2.14-.32 3.61.31 3.96m.71-5.74l-.29-.51c-.11.29-.22.58-.29.86.27.06.57.11.88.16l-.3-.51m6.54-.76l.81-1.5-.81-1.5c-.3-.53-.62-1-.91-1.47C13.17 9 12.6 9 12 9s-1.17 0-1.71.03c-.29.47-.61.94-.91 1.47L8.57 12l.81 1.5c.3.53.62 1 .91 1.47.54.03 1.11.03 1.71.03s1.17 0 1.71-.03c.29-.47.61-.94.91-1.47M12 6.78c-.19.22-.39.45-.59.72h1.18c-.2-.27-.4-.5-.59-.72m0 10.44c.19-.22.39-.45.59-.72h-1.18c.2.27.4.5.59.72M16.62 4c-.62-.38-2 .2-3.59 1.7.52.59 1.03 1.23 1.51 1.9.82.08 1.63.2 2.4.36.51-2.14.32-3.61-.32-3.96m-.7 5.74l.29.51c.11-.29.22-.58.29-.86-.27-.06-.57-.11-.88-.16l.3.51m1.45-7.05c1.47.84 1.63 3.05 1.01 5.63 2.54.75 4.37 1.99 4.37 3.68s-1.83 2.93-4.37 3.68c.62 2.58.46 4.79-1.01 5.63-1.46.84-3.45-.12-5.37-1.95-1.92 1.83-3.91 2.79-5.37 1.95-1.47-.84-1.63-3.05-1.01-5.63-2.54-.75-4.37-1.99-4.37-3.68s1.83-2.93 4.37-3.68c-.62-2.58-.46-4.79 1.01-5.63 1.46-.84 3.45.12 5.37 1.95 1.92-1.83 3.91-2.79 5.37-1.95z" />
+                        </svg>
+                      </div>
+                      {/* Next.js Logo */}
+                      <div className="w-10 h-10 bg-black dark:bg-white rounded-full flex items-center justify-center">
+                        <span className="text-white dark:text-black text-xs font-bold">N</span>
+                      </div>
+                      {/* Vue Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">Vue</span>
+                      </div>
+                    </div>
+                    <span className="text-green-600 dark:text-green-400 font-semibold text-sm">Frontend</span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">React, Next.js, Vue</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">React, Next.js, Vue.js</p>
                 </div>
+
+                {/* Backend Technologies */}
                 <div className="text-center">
-                  <div className="bg-purple-100 dark:bg-purple-900 p-4 rounded-lg mb-2">
-                    <span className="text-purple-600 dark:text-purple-400 font-semibold">Backend</span>
+                  <div className="bg-purple-50 dark:bg-purple-900/30 p-4 rounded-lg mb-3 min-h-[120px] flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center space-x-3 mb-2">
+                      {/* Node.js Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 1.85c-.27 0-.55.07-.78.2l-7.44 4.3c-.48.28-.78.8-.78 1.36v8.58c0 .56.3 1.08.78 1.36l7.44 4.3c.46.26 1.04.26 1.5 0l7.44-4.3c.48-.28.78-.8.78-1.36V7.71c0-.56-.3-1.08-.78-1.36l-7.44-4.3c-.23-.13-.51-.2-.78-.2zm0 2.03L12 4c4.11 0 7.43 3.32 7.43 7.43S16.11 18.86 12 18.86 4.57 15.54 4.57 11.43 7.89 4 12 4z" />
+                        </svg>
+                      </div>
+                      {/* Python Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 via-yellow-500 to-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">Py</span>
+                      </div>
+                      {/* .NET Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">.NET</span>
+                      </div>
+                    </div>
+                    <span className="text-purple-600 dark:text-purple-400 font-semibold text-sm">Backend</span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">Node.js, Python, .NET</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">Node.js, Python, .NET Core</p>
                 </div>
+
+                {/* Database Technologies */}
                 <div className="text-center">
-                  <div className="bg-orange-100 dark:bg-orange-900 p-4 rounded-lg mb-2">
-                    <span className="text-orange-600 dark:text-orange-400 font-semibold">Database</span>
+                  <div className="bg-orange-50 dark:bg-orange-900/30 p-4 rounded-lg mb-3 min-h-[120px] flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center space-x-3 mb-2">
+                      {/* PostgreSQL Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M23.8 12.56c0-3.37-2.73-6.1-6.1-6.1-.1 0-.21 0-.31.01C16.27 3.18 13.38.8 9.9.8 5.43.8 1.8 4.43 1.8 8.9c0 .21.01.42.02.63C.74 10.24 0 11.49 0 12.9c0 2.49 2.01 4.5 4.5 4.5h14.8c2.49 0 4.5-2.01 4.5-4.5 0-.13-.01-.26-.02-.39.01-.28.02-.57.02-.85z" />
+                        </svg>
+                      </div>
+                      {/* MongoDB Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-green-700 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">M</span>
+                      </div>
+                      {/* Redis Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">R</span>
+                      </div>
+                    </div>
+                    <span className="text-orange-600 dark:text-orange-400 font-semibold text-sm">Databases</span>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">PostgreSQL, MongoDB</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">PostgreSQL, MongoDB, Redis</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-16 bg-white dark:bg-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              {t('partners.title')}
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+              {t('partners.subtitle')}
+            </p>
+          </div>
+
+          {/* Infinite Partners Slider */}
+          <div className="relative">
+            <PartnersSlider />
+            <div className="text-center mt-8">
+              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
+                {t('language') === 'en' ? 'Hover to pause • Trusted by enterprises worldwide' : 'เอาเมาส์ไปชี้เพื่อหยุด • ได้รับความไว้วางใจจากองค์กรทั่วโลก'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              {t('reviews.title')}
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+              {t('reviews.subtitle')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* SCB Review */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  SCB
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t('reviews.scb.name')}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{t('reviews.scb.position')}</p>
+                </div>
+              </div>
+              <blockquote className="text-slate-600 dark:text-slate-300 italic">
+                &ldquo;{t('reviews.scb.text')}&rdquo;
+              </blockquote>
+              <div className="flex mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={`scb-star-${i + 1}`} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* SCG Review */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  SCG
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t('reviews.scg.name')}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{t('reviews.scg.position')}</p>
+                </div>
+              </div>
+              <blockquote className="text-slate-600 dark:text-slate-300 italic">
+                &ldquo;{t('reviews.scg.text')}&rdquo;
+              </blockquote>
+              <div className="flex mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={`scg-star-${i + 1}`} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* PTT Review */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  PTT
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t('reviews.ptt.name')}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{t('reviews.ptt.position')}</p>
+                </div>
+              </div>
+              <blockquote className="text-slate-600 dark:text-slate-300 italic">
+                &ldquo;{t('reviews.ptt.text')}&rdquo;
+              </blockquote>
+              <div className="flex mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={`ptt-star-${i + 1}`} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* CP Review */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  CP
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t('reviews.cp.name')}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{t('reviews.cp.position')}</p>
+                </div>
+              </div>
+              <blockquote className="text-slate-600 dark:text-slate-300 italic">
+                &ldquo;{t('reviews.cp.text')}&rdquo;
+              </blockquote>
+              <div className="flex mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={`cp-star-${i + 1}`} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
+
+            {/* TTB Review */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 md:col-span-2 lg:col-span-1">
+              <div className="flex items-center mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  TTB
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{t('reviews.ttb.name')}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{t('reviews.ttb.position')}</p>
+                </div>
+              </div>
+              <blockquote className="text-slate-600 dark:text-slate-300 italic">
+                &ldquo;{t('reviews.ttb.text')}&rdquo;
+              </blockquote>
+              <div className="flex mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={`ttb-star-${i + 1}`} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                  </svg>
+                ))}
               </div>
             </div>
           </div>
@@ -457,6 +854,13 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Product Modal */}
+      <ProductModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        productKey={selectedProduct}
+      />
     </div>
   );
 }

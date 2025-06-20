@@ -1,10 +1,15 @@
 'use client'
 
+import { useEffect, useState } from 'react';
 import { useLanguage } from './components/LanguageProvider'
 import LanguageSwitcher from './components/LanguageSwitcher'
 
 export default function Home() {
-  const { t } = useLanguage()
+  const { t } = useLanguage();
+  const [showClientBg, setShowClientBg] = useState(false);
+  useEffect(() => {
+    setShowClientBg(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900">
@@ -31,22 +36,49 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Animated Background Elements */}
+        {showClientBg && (
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Glowing Orbs */}
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-1/4 left-1/3 w-56 h-56 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+
+            {/* Floating Particles */}
+            <div className="absolute top-1/4 left-1/2 w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
+            <div className="absolute top-1/3 left-1/3 w-1 h-1 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '1.5s' }}></div>
+            <div className="absolute bottom-1/3 right-1/3 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '2.5s' }}></div>
+
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-blue-900/20 dark:via-transparent dark:to-purple-900/20"></div>
+          </div>
+        )}
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6">
-              {t('hero.title1')}
-              <span className="text-blue-600 dark:text-blue-400"> {t('hero.title2')}</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 relative">
+              <span className="relative inline-block">
+                {t('hero.title1')}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-20 blur-2xl -z-10 animate-pulse"></div>
+              </span>
+              <span className="text-blue-600 dark:text-blue-400 relative inline-block ml-3">
+                {t('hero.title2')}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-30 blur-xl -z-10 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              </span>
             </h1>
-            <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto relative">
               {t('hero.subtitle')}
+              <span className="absolute inset-0 bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 opacity-10 blur-xl -z-10 block"></span>
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#contact" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
-                {t('hero.consultation')}
+              <a href="#contact" className="relative group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:from-blue-700 hover:to-blue-800 hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
+                <span className="relative z-10">{t('hero.consultation')}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-20 rounded-lg blur-xl transition-opacity duration-300"></div>
               </a>
-              <a href="tel:0932473600" className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
-                {t('hero.call')}
+              <a href="tel:0932473600" className="relative group border-2 border-blue-600 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
+                <span className="relative z-10">{t('hero.call')}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-10 rounded-lg blur-xl transition-opacity duration-300"></div>
               </a>
             </div>
           </div>

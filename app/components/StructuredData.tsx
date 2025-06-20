@@ -4,7 +4,7 @@ export default function StructuredData() {
         "@type": "ProfessionalService",
         "name": "PipoX Technology Consulting",
         "description": "Expert technology consulting services including digital transformation, cloud migration, software development, and IT strategy consulting.",
-        "url": "https://pipox.com",
+        "url": "https://pipox.chobchuen.com",
         "telephone": "+66932473600",
         "email": "contact@pipox.com",
         "address": {

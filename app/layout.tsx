@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "your-google-verification-code", // Replace with actual Google verification code
+    google: "hVy1MCa2pqEBxHcb-gVJizGJYan3xIs7mfmea1jwPJI",
   },
   alternates: {
     canonical: "https://pipox.com",

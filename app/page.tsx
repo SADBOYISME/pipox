@@ -1,4 +1,11 @@
+'use client'
+
+import { useLanguage } from './components/LanguageProvider'
+import LanguageSwitcher from './components/LanguageSwitcher'
+
 export default function Home() {
+  const { t } = useLanguage()
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900">
       {/* Navigation */}
@@ -9,13 +16,14 @@ export default function Home() {
               <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">PipoX</h1>
             </div>
             <div className="hidden md:flex space-x-8">
-              <a href="#services" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Services</a>
-              <a href="#about" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
-              <a href="#contact" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+              <a href="#services" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.services')}</a>
+              <a href="#about" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.about')}</a>
+              <a href="#contact" className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.contact')}</a>
             </div>
             <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
               <a href="tel:0932473600" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                Call Now
+                {t('nav.callNow')}
               </a>
             </div>
           </div>
@@ -27,19 +35,18 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6">
-              Transform Your Business with
-              <span className="text-blue-600 dark:text-blue-400"> Expert Tech Consulting</span>
+              {t('hero.title1')}
+              <span className="text-blue-600 dark:text-blue-400"> {t('hero.title2')}</span>
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto">
-              Accelerate your digital transformation with our comprehensive technology consulting services.
-              From cloud migration to custom software development, we deliver solutions that drive growth.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="#contact" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
-                Get Free Consultation
+                {t('hero.consultation')}
               </a>
               <a href="tel:0932473600" className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
-                Call: 093-247-3600
+                {t('hero.call')}
               </a>
             </div>
           </div>
@@ -51,83 +58,89 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              Our Technology Consulting Services
+              {t('services.title')}
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-              Comprehensive tech solutions tailored to your business needs
+              {t('services.subtitle')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Digital Transformation */}
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Digital Transformation</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.digital.title')}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                Modernize your business processes with cutting-edge digital solutions and automation strategies.
+                {t('services.digital.desc')}
               </p>
             </div>
 
+            {/* Cloud Migration */}
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Cloud Migration</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.cloud.title')}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                Seamlessly migrate your infrastructure to the cloud with AWS, Azure, or Google Cloud platforms.
+                {t('services.cloud.desc')}
               </p>
             </div>
 
+            {/* Custom Software Development */}
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Custom Software Development</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.software.title')}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                Build scalable web applications, mobile apps, and enterprise software tailored to your requirements.
+                {t('services.software.desc')}
               </p>
             </div>
 
+            {/* Cybersecurity */}
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Cybersecurity</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.security.title')}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                Protect your business with comprehensive security audits, implementation, and monitoring solutions.
+                {t('services.security.desc')}
               </p>
             </div>
 
+            {/* Performance Optimization */}
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Performance Optimization</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.performance.title')}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                Optimize your applications and infrastructure for maximum performance and cost efficiency.
+                {t('services.performance.desc')}
               </p>
             </div>
 
+            {/* Team Augmentation */}
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
                 <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Team Augmentation</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.team.title')}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                Scale your development team with our experienced engineers and technical specialists.
+                {t('services.team.desc')}
               </p>
             </div>
           </div>
@@ -140,11 +153,10 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                Why Choose PipoX for Your Tech Consulting Needs?
+                {t('about.title')}
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">
-                With years of experience in technology consulting, we&apos;ve helped numerous businesses transform
-                their operations and achieve sustainable growth through innovative tech solutions.
+                {t('about.subtitle')}
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
@@ -154,8 +166,8 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white">Proven Track Record</h3>
-                    <p className="text-slate-600 dark:text-slate-300">Successfully delivered 100+ projects across various industries</p>
+                    <h3 className="font-semibold text-slate-900 dark:text-white">{t('about.proven.title')}</h3>
+                    <p className="text-slate-600 dark:text-slate-300">{t('about.proven.desc')}</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -165,8 +177,8 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white">Expert Team</h3>
-                    <p className="text-slate-600 dark:text-slate-300">Certified professionals with deep expertise in latest technologies</p>
+                    <h3 className="font-semibold text-slate-900 dark:text-white">{t('about.expert.title')}</h3>
+                    <p className="text-slate-600 dark:text-slate-300">{t('about.expert.desc')}</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -176,14 +188,14 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white">24/7 Support</h3>
-                    <p className="text-slate-600 dark:text-slate-300">Round-the-clock support and maintenance for all our solutions</p>
+                    <h3 className="font-semibold text-slate-900 dark:text-white">{t('about.support.title')}</h3>
+                    <p className="text-slate-600 dark:text-slate-300">{t('about.support.desc')}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Technologies We Work With</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">{t('about.tech.title')}</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg mb-2">
@@ -219,18 +231,17 @@ export default function Home() {
       <section className="py-16 bg-blue-600 dark:bg-blue-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Business?
+            {t('cta.title')}
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Let&apos;s discuss how our technology consulting services can help accelerate your digital transformation
-            and drive sustainable growth for your business.
+            {t('cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#contact" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors">
-              Get Free Consultation
+              {t('cta.consultation')}
             </a>
             <a href="tel:0932473600" className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              Call: 093-247-3600
+              {t('cta.call')}
             </a>
           </div>
         </div>
@@ -241,10 +252,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              Get In Touch
+              {t('contact.title')}
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-300">
-              Ready to start your digital transformation journey? Contact us today.
+              {t('contact.subtitle')}
             </p>
           </div>
 
@@ -257,9 +268,9 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Phone</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{t('contact.phone')}</h3>
                   <p className="text-slate-600 dark:text-slate-300">093-247-3600</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Available Mon-Fri, 9AM-6PM</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('contact.availability')}</p>
                 </div>
               </div>
 
@@ -270,9 +281,9 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Email</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{t('contact.email')}</h3>
                   <p className="text-slate-600 dark:text-slate-300">contact@pipox.com</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">We respond within 24 hours</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('contact.response')}</p>
                 </div>
               </div>
 
@@ -284,69 +295,69 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Office</h3>
-                  <p className="text-slate-600 dark:text-slate-300">Bangkok, Thailand</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Remote consultations available worldwide</p>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{t('contact.office')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">{t('contact.location')}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t('contact.remote')}</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Request a Free Consultation</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">{t('contact.form.title')}</h3>
               <form className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Full Name
+                    {t('contact.form.name')}
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-800 dark:text-white"
-                    placeholder="Your full name"
+                    placeholder={t('contact.form.namePlaceholder')}
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Email Address
+                    {t('contact.form.email')}
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-800 dark:text-white"
-                    placeholder="your@email.com"
+                    placeholder={t('contact.form.emailPlaceholder')}
                   />
                 </div>
                 <div>
                   <label htmlFor="company" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Company
+                    {t('contact.form.company')}
                   </label>
                   <input
                     type="text"
                     id="company"
                     name="company"
                     className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-800 dark:text-white"
-                    placeholder="Your company name"
+                    placeholder={t('contact.form.companyPlaceholder')}
                   />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Project Details
+                    {t('contact.form.message')}
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     rows={4}
                     className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-800 dark:text-white"
-                    placeholder="Tell us about your project requirements..."
+                    placeholder={t('contact.form.messagePlaceholder')}
                   ></textarea>
                 </div>
                 <button
                   type="submit"
                   className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                 >
-                  Send Message
+                  {t('contact.form.send')}
                 </button>
               </form>
             </div>
@@ -361,7 +372,7 @@ export default function Home() {
             <div>
               <h3 className="text-2xl font-bold text-blue-400 mb-4">PipoX</h3>
               <p className="text-slate-300 mb-4">
-                Expert technology consulting services to transform your business and accelerate growth.
+                {t('footer.description')}
               </p>
               <div className="flex space-x-4">
                 <span className="text-slate-400 hover:text-white transition-colors cursor-pointer">
@@ -380,37 +391,37 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold mb-4">Services</h4>
+              <h4 className="text-lg font-semibold mb-4">{t('footer.services')}</h4>
               <ul className="space-y-2 text-slate-300">
-                <li><span className="hover:text-white transition-colors cursor-pointer">Digital Transformation</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Cloud Migration</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Software Development</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Cybersecurity</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">{t('services.digital.title')}</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">{t('services.cloud.title')}</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">{t('services.software.title')}</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">{t('services.security.title')}</span></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold mb-4">Company</h4>
+              <h4 className="text-lg font-semibold mb-4">{t('footer.company')}</h4>
               <ul className="space-y-2 text-slate-300">
-                <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Case Studies</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Careers</span></li>
-                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#about" className="hover:text-white transition-colors">{t('footer.aboutUs')}</a></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">{t('footer.caseStudies')}</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">{t('footer.careers')}</span></li>
+                <li><a href="#contact" className="hover:text-white transition-colors">{t('nav.contact')}</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+              <h4 className="text-lg font-semibold mb-4">{t('footer.contactInfo')}</h4>
               <ul className="space-y-2 text-slate-300">
-                <li>Phone: 093-247-3600</li>
-                <li>Email: contact@pipox.com</li>
-                <li>Bangkok, Thailand</li>
+                <li>{t('contact.phone')}: 093-247-3600</li>
+                <li>{t('contact.email')}: contact@pipox.com</li>
+                <li>{t('contact.location')}</li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
-            <p>&copy; 2025 PipoX Technology Consulting. All rights reserved.</p>
+            <p>&copy; {t('footer.copyright')}</p>
           </div>
         </div>
       </footer>

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import StructuredData from "./components/StructuredData";
+import { LanguageProvider } from "./components/LanguageProvider";
+import HtmlWrapper from "./components/HtmlWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +13,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const notoSansThai = Noto_Sans_Thai({
+  variable: "--font-noto-sans-thai",
+  subsets: ["thai"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -65,15 +73,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <StructuredData />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <LanguageProvider>
+      <HtmlWrapper>
+        <head>
+          <StructuredData />
+        </head>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </HtmlWrapper>
+    </LanguageProvider>
   );
 }

@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://pipox.com/sitemap.xml",
+    sitemap: "https://pipox.chobchuen.com/sitemap.xml",
   };
 }

@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900">
+    <div className="min-h-screen bg-white dark:from-slate-900 dark:to-slate-900">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,57 +52,95 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Animated Background Elements */}
+      <section className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-900">
+        {/* Subtle Background Pattern */}
         {showClientBg && (
-          <div className="absolute inset-0 overflow-hidden">
-            {/* Glowing Orbs */}
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute bottom-1/4 left-1/3 w-56 h-56 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-
-            {/* Floating Particles */}
-            <div className="absolute top-1/4 left-1/2 w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
-            <div className="absolute top-1/3 left-1/3 w-1 h-1 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '1.5s' }}></div>
-            <div className="absolute bottom-1/3 right-1/3 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '2.5s' }}></div>
-
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-blue-900/20 dark:via-transparent dark:to-purple-900/20"></div>
+          <div className="absolute inset-0 overflow-hidden opacity-40">
+            <div className="absolute top-20 right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
           </div>
         )}
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 relative">
-              <span className="relative inline-block">
-                {t('hero.title1')}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-20 blur-2xl -z-10 animate-pulse"></div>
-              </span>
-              <span className="text-blue-600 dark:text-blue-400 relative inline-block ml-3">
-                {t('hero.title2')}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-30 blur-xl -z-10 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-              </span>
-            </h1>
-            <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto relative">
-              {t('hero.subtitle')}
-              <span className="absolute inset-0 bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 opacity-10 blur-xl -z-10 block"></span>
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#contact" className="relative group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:from-blue-700 hover:to-blue-800 hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
-                <span className="relative z-10">{t('hero.consultation')}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-20 rounded-lg blur-xl transition-opacity duration-300"></div>
-              </a>
-              <a href="tel:0932473600" className="relative group border-2 border-blue-600 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
-                <span className="relative z-10">{t('hero.call')}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-10 rounded-lg blur-xl transition-opacity duration-300"></div>
-              </a>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text Content */}
+            <div className="space-y-8">
+              {/* Badge/Eyebrow */}
+              <div className="inline-flex items-center px-4 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-full">
+                <span className="w-2 h-2 bg-blue-600 rounded-full mr-2 animate-pulse"></span>
+                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                  {t('language') === 'en' ? 'Premium Tech Consulting' : 'ที่ปรึกษาเทคโนโลยีระดับพรีเมียม'}
+                </span>
+              </div>
+
+              {/* Heading */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
+                {t('hero.title1')}{' '}
+                <span className="relative inline-block">
+                  <span className="text-blue-600 dark:text-blue-400">{t('hero.title2')}</span>
+                  <div className="absolute -bottom-2 left-0 right-0 h-3 bg-blue-100 dark:bg-blue-900/30 -z-10"></div>
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+                {t('hero.subtitle')}
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href="#contact" 
+                  className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white text-base font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  {t('hero.consultation')}
+                  <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+                <a 
+                  href="tel:0932473600" 
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-base font-semibold rounded-lg border-2 border-slate-200 dark:border-slate-700 hover:border-blue-600 dark:hover:border-blue-500 transition-all duration-200"
+                >
+                  {t('hero.call')}
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column - Hero Image */}
+            <div className="relative lg:block">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="/hero-illustration.svg" 
+                  alt="Technology Consulting Illustration" 
+                  className="w-full h-auto"
+                  width="600"
+                  height="500"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Partners Section - Moved right after Hero */}
+      <section className="py-12 bg-white dark:bg-slate-800 border-y border-slate-100 dark:border-slate-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+              {t('partners.title')}
+            </p>
+          </div>
+
+          {/* Partners Slider */}
+          <div className="relative">
+            <PartnersSlider />
+          </div>
+        </div>
+      </section>
+
       {/* Products Section */}
-      <section id="products" className="py-16 bg-gradient-to-br from-white to-blue-50 dark:from-slate-900 dark:to-blue-950">
+      <section id="products" className="py-20 bg-white dark:from-slate-900 dark:to-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">{t('products.title')}</h2>
@@ -121,18 +159,15 @@ export default function Home() {
               tabIndex={0}
               role="button"
               aria-label="Learn more about AI Project Platform"
-              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="group relative bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 dark:border-slate-700 cursor-pointer transform hover:-translate-y-1 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
-
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300 group-hover:scale-110">
-                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 transition-all duration-300">
+                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 transition-colors">
                   {t('products.ai.title')}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.ai.desc')}</p>
@@ -159,17 +194,15 @@ export default function Home() {
               tabIndex={0}
               role="button"
               aria-label="Learn more about Cloud Infrastructure"
-              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+              className="group relative bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 dark:border-slate-700 cursor-pointer transform hover:-translate-y-1 overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
-
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-cyan-100 dark:bg-cyan-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-cyan-500/50 transition-all duration-300 group-hover:scale-110">
-                  <svg className="w-6 h-6 text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-cyan-50 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/50 transition-all duration-300">
+                  <svg className="w-6 h-6 text-cyan-600 dark:text-cyan-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 transition-colors">
                   {t('products.cloud.title')}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.cloud.desc')}</p>
@@ -195,17 +228,15 @@ export default function Home() {
               tabIndex={0}
               role="button"
               aria-label="Learn more about Business Automation Suite"
-              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              className="group relative bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 dark:border-slate-700 cursor-pointer transform hover:-translate-y-1 overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-emerald-500/20 to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
-
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-green-500/50 transition-all duration-300 group-hover:scale-110">
-                  <svg className="w-6 h-6 text-green-600 dark:text-green-400 group-hover:text-green-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-green-100 dark:group-hover:bg-green-900/50 transition-all duration-300">
+                  <svg className="w-6 h-6 text-green-600 dark:text-green-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 transition-colors">
                   {t('products.automation.title')}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.automation.desc')}</p>
@@ -231,17 +262,15 @@ export default function Home() {
               tabIndex={0}
               role="button"
               aria-label="Learn more about Data Analytics Tools"
-              className="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-blue-100 dark:border-slate-700 cursor-pointer transform hover:-translate-y-3 hover:scale-105 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              className="group relative bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 dark:border-slate-700 cursor-pointer transform hover:-translate-y-1 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl blur-xl"></div>
-
               <div className="relative z-10">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-purple-500/50 transition-all duration-300 group-hover:scale-110">
-                  <svg className="w-6 h-6 text-purple-600 dark:text-purple-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-100 dark:group-hover:bg-purple-900/50 transition-all duration-300">
+                  <svg className="w-6 h-6 text-purple-600 dark:text-purple-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 transition-colors">
                   {t('products.analytics.title')}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-4">{t('products.analytics.desc')}</p>
@@ -259,9 +288,9 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-16 bg-white dark:bg-slate-800">
+      <section id="services" className="py-20 bg-slate-50 dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               {t('services.title')}
             </h2>
@@ -270,90 +299,101 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Digital Transformation */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.digital.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                {t('services.digital.desc')}
-              </p>
-            </div>
+          {/* Horizontal Scrollable List */}
+          <div className="relative">
+            {/* Gradient Fade Left */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-slate-50 dark:from-slate-900 to-transparent z-10 pointer-events-none"></div>
+            
+            {/* Gradient Fade Right */}
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-slate-50 dark:from-slate-900 to-transparent z-10 pointer-events-none"></div>
 
-            {/* Cloud Migration */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.cloud.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                {t('services.cloud.desc')}
-              </p>
-            </div>
+            <div className="overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide" style={{ scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}>
+              <div className="flex gap-6 min-w-max">
+                {/* Digital Transformation */}
+                <div className="flex-shrink-0 w-80 bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow" style={{ scrollSnapAlign: 'start' }}>
+                  <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.digital.title')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    {t('services.digital.desc')}
+                  </p>
+                </div>
 
-            {/* Custom Software Development */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.software.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                {t('services.software.desc')}
-              </p>
-            </div>
+                {/* Cloud Migration */}
+                <div className="flex-shrink-0 w-80 bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow" style={{ scrollSnapAlign: 'start' }}>
+                  <div className="w-12 h-12 bg-cyan-50 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.cloud.title')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    {t('services.cloud.desc')}
+                  </p>
+                </div>
 
-            {/* Cybersecurity */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.security.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                {t('services.security.desc')}
-              </p>
-            </div>
+                {/* Custom Software Development */}
+                <div className="flex-shrink-0 w-80 bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow" style={{ scrollSnapAlign: 'start' }}>
+                  <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.software.title')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    {t('services.software.desc')}
+                  </p>
+                </div>
 
-            {/* Performance Optimization */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.performance.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                {t('services.performance.desc')}
-              </p>
-            </div>
+                {/* Cybersecurity */}
+                <div className="flex-shrink-0 w-80 bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow" style={{ scrollSnapAlign: 'start' }}>
+                  <div className="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.security.title')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    {t('services.security.desc')}
+                  </p>
+                </div>
 
-            {/* Team Augmentation */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-8 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+                {/* Performance Optimization */}
+                <div className="flex-shrink-0 w-80 bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow" style={{ scrollSnapAlign: 'start' }}>
+                  <div className="w-12 h-12 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.performance.title')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    {t('services.performance.desc')}
+                  </p>
+                </div>
+
+                {/* Team Augmentation */}
+                <div className="flex-shrink-0 w-80 bg-white dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow" style={{ scrollSnapAlign: 'start' }}>
+                  <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mb-6">
+                    <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.team.title')}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">
+                    {t('services.team.desc')}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{t('services.team.title')}</h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                {t('services.team.desc')}
-              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-16 bg-slate-50 dark:bg-slate-900">
+      <section id="about" className="py-20 bg-white dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -399,7 +439,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">{t('about.tech.title')}</h3>
               <div className="grid grid-cols-2 gap-4">
                 {/* Cloud Platforms */}
@@ -501,32 +541,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Partners Section */}
-      <section className="py-16 bg-white dark:bg-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              {t('partners.title')}
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-              {t('partners.subtitle')}
-            </p>
-          </div>
-
-          {/* Infinite Partners Slider */}
-          <div className="relative">
-            <PartnersSlider />
-            <div className="text-center mt-8">
-              <p className="text-sm text-slate-500 dark:text-slate-400 italic">
-                {t('language') === 'en' ? 'Hover to pause • Trusted by enterprises worldwide' : 'เอาเมาส์ไปชี้เพื่อหยุด • ได้รับความไว้วางใจจากองค์กรทั่วโลก'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Customer Reviews Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900">
+      <section className="py-20 bg-slate-50 dark:from-slate-800 dark:to-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
@@ -657,7 +673,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-blue-600 dark:bg-blue-700">
+      <section className="py-20 bg-blue-600 dark:bg-blue-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             {t('cta.title')}
